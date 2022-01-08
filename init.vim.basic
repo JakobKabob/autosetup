@@ -67,7 +67,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'sainnhe/sonokai'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'tomlion/vim-solidity'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} NEOVIM 0.5.0 NOT NEW
 call plug#end()
 
 
