@@ -1,0 +1,52 @@
+unbind C-b
+set -g prefix C-f
+bind C-f send-prefix
+set -s escape-time 0
+
+set -g mouse on
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e'"
+
+# display -p #{pane_current_command}
+
+unbind-key h
+unbind-key j
+unbind-key k
+unbind-key l
+
+bind k if "[ $(tmux display -p '#{pane_current_command}') = binfmt-bypass ]" "send-keys C-k" "select-pane -U"
+bind j if "[ $(tmux display -p '#{pane_current_command}') = binfmt-bypass ]" "send-keys C-j" "select-pane -D"
+bind h if "[ $(tmux display -p '#{pane_current_command}') = binfmt-bypass ]" "send-keys C-h" "select-pane -L"
+bind l if "[ $(tmux display -p '#{pane_current_command}') = binfmt-bypass ]" "send-keys C-l" "select-pane -R"
+
+unbind-key s
+bind s split-window -h -c "#{pane_current_path}"
+unbind-key d
+bind d split-window -v -c "#{pane_current_path}"
+unbind-key w
+bind w choose-tree
+unbind-key c
+bind c new-window -c "#{pane_current_path}"
+# or -c "#{pane_current_path}"
+unbind-key C
+bind C new-session
+
+# attach tmux clipboard to x11 clipboard 
+unbind -T copy-mode-vi Space; #Default for begin-selection
+unbind -T copy-mode-vi Enter; #Default for copy-selection
+set-window-option -g mode-keys vi
+
+bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xsel -i --clipboard"
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xsel -i --clipboard"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xsel -i --clipboard"
+bind -T copy-mode-vi v send-keys -X begin-selection
+
+set -sg escape-time 0
+set -g default-terminal "screen-256color"
+set -g -a terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+
+#set -g default-terminal "screen-256color"
+#set -ga terminal-overrides ",xterm-256color*:Tc"
+
+unbind r
+bind r source-file ~/.tmux.conf \; display "Reloaded ~/.tmux.conf"
+
