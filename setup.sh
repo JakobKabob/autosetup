@@ -33,7 +33,6 @@ colour[grey]="black"
 colour[orange]="black"
 colour[yellow]="black"
 
-exit 1
 # configure tmux
 cat tmux.conf.basic > $HOME/.tmux.conf
 [[ ! -z $1 ]] && [[ ! -z ${colour[$1]} ]] && echo -e "set -g status-bg $1\nset -g status-fg ${colour[$1]}" >> $HOME/.tmux.conf
